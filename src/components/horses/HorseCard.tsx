@@ -40,7 +40,7 @@ export function HorseCard({ horse }: HorseCardProps) {
       <div className="relative aspect-[3/4] overflow-hidden bg-muted">
         {/* Main Image */}
         <motion.img
-          src={horse.image}
+          src={`images/${horse.image}`}
           alt={horse.name}
           className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300"
           style={{ opacity: isHovered ? 0 : 1 }}
@@ -65,7 +65,8 @@ export function HorseCard({ horse }: HorseCardProps) {
             {horse.name}
           </CardTitle>
           <p className="text-sm font-medium opacity-90">
-            {horse.breed} • {horse.age} years old
+            {horse.breed} • {new Date().getFullYear() - horse.dob.getFullYear()}{" "}
+            years old
           </p>
 
           {/* Quirks Meter - Revealed on Hover */}
@@ -83,7 +84,7 @@ export function HorseCard({ horse }: HorseCardProps) {
               <div className="h-1.5 flex-1 rounded-full bg-white/20">
                 <div
                   className="h-full rounded-full bg-accent"
-                  style={{ width: `${horse.quirks.energy * 10}%` }}
+                  style={{ width: `${horse.stats.energy * 10}%` }}
                 />
               </div>
             </div>
@@ -93,7 +94,7 @@ export function HorseCard({ horse }: HorseCardProps) {
               <div className="h-1.5 flex-1 rounded-full bg-white/20">
                 <div
                   className="h-full rounded-full bg-primary"
-                  style={{ width: `${horse.quirks.trust * 10}%` }}
+                  style={{ width: `${horse.stats.trust * 10}%` }}
                 />
               </div>
             </div>
@@ -103,7 +104,7 @@ export function HorseCard({ horse }: HorseCardProps) {
               <div className="h-1.5 flex-1 rounded-full bg-white/20">
                 <div
                   className="h-full rounded-full bg-secondary"
-                  style={{ width: `${horse.quirks.handling * 10}%` }}
+                  style={{ width: `${horse.stats.handling * 10}%` }}
                 />
               </div>
             </div>
