@@ -1,49 +1,35 @@
-"use client"
+"use client";
 
-import { useState, useRef } from "react"
-import { motion } from "framer-motion"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Activity, Heart, Hand } from "lucide-react"
-
-export interface Horse {
-  id: string
-  name: string
-  age: number
-  breed: string
-  image: string
-  video: string
-  tags: string[]
-  quirks: {
-    energy: number // 1-10
-    trust: number // 1-10
-    handling: number // 1-10
-  }
-}
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardTitle } from "@/components/ui/card";
+import { Horse } from "@/lib/horses";
+import { motion } from "framer-motion";
+import { Activity, Hand, Heart } from "lucide-react";
+import { useRef, useState } from "react";
 
 interface HorseCardProps {
-  horse: Horse
+  horse: Horse;
 }
 
 export function HorseCard({ horse }: HorseCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleMouseEnter = () => {
-    setIsHovered(true)
+    setIsHovered(true);
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {})
+      videoRef.current.play().catch(() => {});
     }
-  }
+  };
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
+    setIsHovered(false);
     if (videoRef.current) {
-      videoRef.current.pause()
-      videoRef.current.currentTime = 0
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
     }
-  }
+  };
 
   return (
     <Card
@@ -75,7 +61,9 @@ export function HorseCard({ horse }: HorseCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
 
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-          <CardTitle className="mb-2 text-3xl font-serif font-bold">{horse.name}</CardTitle>
+          <CardTitle className="mb-2 text-3xl font-serif font-bold">
+            {horse.name}
+          </CardTitle>
           <p className="text-sm font-medium opacity-90">
             {horse.breed} • {horse.age} years old
           </p>
@@ -83,7 +71,10 @@ export function HorseCard({ horse }: HorseCardProps) {
           {/* Quirks Meter - Revealed on Hover */}
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: isHovered ? "auto" : 0, opacity: isHovered ? 1 : 0 }}
+            animate={{
+              height: isHovered ? "auto" : 0,
+              opacity: isHovered ? 1 : 0,
+            }}
             className="mt-4 space-y-2 overflow-hidden"
           >
             <div className="flex items-center gap-2 text-xs">
@@ -127,14 +118,17 @@ export function HorseCard({ horse }: HorseCardProps) {
 
         {/* Tags */}
         <div className="absolute top-4 right-4 flex flex-col gap-2">
-            {horse.tags.map(tag => (
-                <Badge key={tag} variant="secondary" className="backdrop-blur-md bg-black/40 text-white hover:bg-black/60 border-none">
-                    {tag}
-                </Badge>
-            ))}
+          {horse.tags.map((tag) => (
+            <Badge
+              key={tag}
+              variant="secondary"
+              className="backdrop-blur-md bg-black/40 text-white hover:bg-black/60 border-none"
+            >
+              {tag}
+            </Badge>
+          ))}
         </div>
       </div>
     </Card>
-  )
+  );
 }
-
