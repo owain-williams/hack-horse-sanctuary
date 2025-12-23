@@ -5,48 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-
-interface Location {
-  id: string;
-  name: string;
-  x: number; // percentage
-  y: number; // percentage
-  description: string;
-  image: string;
-}
-
-const LOCATIONS: Location[] = [
-  {
-    id: "barn",
-    name: "The Big Barn",
-    x: 40,
-    y: 30,
-    description:
-      "The heart of our sanctuary, housing our seniors and those needing extra care.",
-    image:
-      "https://images.unsplash.com/photo-1544977085-35db3e47dc40?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: "pasture",
-    name: "North Pasture",
-    x: 70,
-    y: 50,
-    description:
-      "Acres of rolling hills where the herd roams free during the day.",
-    image:
-      "https://images.unsplash.com/photo-1447012359422-54c3dc02b236?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: "arena",
-    name: "Rehab Arena",
-    x: 25,
-    y: 65,
-    description:
-      "Where trust is rebuilt. Our specialized training facility for rehabilitation.",
-    image:
-      "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=800&auto=format&fit=crop",
-  },
-];
+import { locations, Location } from "@/lib/locations";
 
 export function SanctuaryMap() {
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
@@ -65,37 +24,18 @@ export function SanctuaryMap() {
           </p>
         </div>
 
-        <div className="relative aspect-video w-full max-w-5xl mx-auto rounded-3xl overflow-hidden bg-[#e6dfd3] shadow-inner border-4 border-white">
-          {/* Stylized Map Background (SVG Pattern) */}
-          <div
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: "radial-gradient(#5a7c65 1px, transparent 1px)",
-              backgroundSize: "20px 20px",
-            }}
+        <div className="relative w-full aspect-video max-w-5xl mx-auto rounded-3xl overflow-hidden bg-[#F8F4EB] shadow-inner border-4 border-white">
+          {/* Map Overview SVG */}
+          <Image
+            src="/images/svg/map-overview.svg"
+            alt="Sanctuary Map Overview"
+            fill
+            className="object-contain"
+            priority
           />
 
-          {/* Simple Illustration Elements (SVG) */}
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none text-primary/20"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            {/* River */}
-            <path
-              d="M0 80 C 30 70, 70 90, 100 80"
-              stroke="currentColor"
-              strokeWidth="2"
-              fill="none"
-            />
-            {/* Trees */}
-            <circle cx="10" cy="20" r="5" fill="currentColor" />
-            <circle cx="85" cy="15" r="8" fill="currentColor" />
-            <circle cx="90" cy="85" r="6" fill="currentColor" />
-          </svg>
-
           {/* Interactive Pins */}
-          {LOCATIONS.map((loc) => (
+          {locations.map((loc) => (
             <button
               key={loc.id}
               className="absolute z-10 group transform -translate-x-1/2 -translate-y-1/2"
