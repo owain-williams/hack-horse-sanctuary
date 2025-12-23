@@ -24,8 +24,12 @@ export function BeforeAfterSlider() {
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  const handleMove = (event: React.MouseEvent | React.TouchEvent) => {
+  const handleMove = (event: MouseEvent | TouchEvent) => {
     if (!containerRef.current) return;
+
+    if (event.type === "touchmove" && event.cancelable) {
+      event.preventDefault();
+    }
 
     const { left, width } = containerRef.current.getBoundingClientRect();
     let clientX;
@@ -33,7 +37,7 @@ export function BeforeAfterSlider() {
     if ("touches" in event) {
       clientX = event.touches[0].clientX;
     } else {
-      clientX = (event as React.MouseEvent).clientX;
+      clientX = (event as MouseEvent).clientX;
     }
 
     const position = ((clientX - left) / width) * 100;
@@ -47,15 +51,15 @@ export function BeforeAfterSlider() {
     if (isDragging) {
       window.addEventListener("mouseup", handleMouseUp);
       window.addEventListener("touchend", handleMouseUp);
-      window.addEventListener("mousemove", handleMove as any);
-      window.addEventListener("touchmove", handleMove as any);
+      window.addEventListener("mousemove", handleMove);
+      window.addEventListener("touchmove", handleMove, { passive: false });
     }
 
     return () => {
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("touchend", handleMouseUp);
-      window.removeEventListener("mousemove", handleMove as any);
-      window.removeEventListener("touchmove", handleMove as any);
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("touchmove", handleMove);
     };
   }, [isDragging]);
 
@@ -74,7 +78,7 @@ export function BeforeAfterSlider() {
         <div className="flex justify-center">
           <div
             ref={containerRef}
-            className="relative h-[400px] w-full max-w-4xl cursor-ew-resize overflow-hidden rounded-2xl shadow-2xl select-none"
+            className="relative h-[400px] w-full max-w-4xl cursor-ew-resize overflow-hidden rounded-2xl shadow-2xl select-none touch-none"
             onMouseDown={handleMouseDown}
             onTouchStart={handleMouseDown}
           >
