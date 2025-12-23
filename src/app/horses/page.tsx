@@ -2,15 +2,16 @@
 
 import { HorseCard } from "@/components/horses/HorseCard";
 import { HorseFilters } from "@/components/horses/HorseFilters";
-import { HORSES } from "@/lib/horses";
+import { HORSES, type Tag } from "@/lib/horses";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 export default function HorsesPage() {
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState<Tag>("All");
 
   const filteredHorses = HORSES.filter((horse) => {
     if (filter === "All") return true;
+
     return horse.tags.includes(filter);
   });
 

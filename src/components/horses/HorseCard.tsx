@@ -37,7 +37,7 @@ export function HorseCard({ horse }: HorseCardProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+      <div className="relative aspect-3/4 overflow-hidden bg-muted">
         {/* Main Image */}
         <motion.img
           src={`images/${horse.image}`}
@@ -58,7 +58,7 @@ export function HorseCard({ horse }: HorseCardProps) {
         />
 
         {/* Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-90" />
 
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
           <CardTitle className="mb-2 text-3xl font-serif font-bold">
