@@ -57,40 +57,46 @@ export function SanctuaryMap() {
           <AnimatePresence>
             {selectedLocation && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="absolute inset-0 z-20 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
                 onClick={() => setSelectedLocation(null)}
               >
-                <Card
-                  className="w-full max-w-md overflow-hidden bg-background"
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 10 }}
                   onClick={(e) => e.stopPropagation()}
+                  className="w-full max-w-md"
                 >
-                  <div className="relative aspect-video">
-                    <Image
-                      src={selectedLocation.image}
-                      alt={selectedLocation.name}
-                      className="w-full h-full object-cover"
-                      height={500}
-                      width={500}
-                    />
-                    <button
-                      className="absolute top-2 right-2 p-1 bg-black/50 rounded-full text-white hover:bg-black/70"
-                      onClick={() => setSelectedLocation(null)}
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-serif text-2xl font-bold mb-2">
-                      {selectedLocation.name}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {selectedLocation.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  <Card className="overflow-hidden bg-background shadow-xl border-2 border-primary/10">
+                    <div className="relative aspect-video">
+                      <Image
+                        src={selectedLocation.image}
+                        alt={selectedLocation.name}
+                        className="w-full h-full object-cover"
+                        height={500}
+                        width={500}
+                      />
+                      <button
+                        className="absolute top-2 right-2 p-2 bg-black/50 rounded-full text-white hover:bg-black/70 transition-colors backdrop-blur-sm"
+                        onClick={() => setSelectedLocation(null)}
+                        aria-label="Close modal"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <CardContent className="p-6">
+                      <h3 className="font-serif text-2xl font-bold mb-2 text-primary">
+                        {selectedLocation.name}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {selectedLocation.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
